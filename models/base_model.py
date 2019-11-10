@@ -2,9 +2,9 @@
 """
 module class BaseModel
 """
-import uuid
-from datetime import datetime, date, time
-import json
+from datetime import datetime
+from uuid import uuid4
+import models
 
 class BaseModel:
     """
@@ -23,9 +23,10 @@ class BaseModel:
                 else:
                     self.__dict__[key] = value
         else:
-            self.id = str(uuid.uuid4())
+            self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -50,5 +51,4 @@ class BaseModel:
         my_dict.update(__class__ = self.__class__.__name__)
         my_dict['created_at'] = my_dict['created_at'].isoformat()
         my_dict['updated_at'] = my_dict['updated_at'].isoformat()
-
         return my_dict
