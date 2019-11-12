@@ -3,8 +3,8 @@
 
 
 import cmd
-
-    options = [
+import models
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -23,12 +23,18 @@ class HBNBCommand(cmd.Cmd):
         """Quit the program"""
         return True
 
-    def to_create(self, line):
+    def do_create(self, line):
         """Creates a new instance of BaseModel"""
-        if line[0] == 0:
+        options = ["BaseModel"]
+        arg = line.split()
+        if len(arg) == 0:
             print("** class name missing **")
-        if line[0] is not in options:
-            print("** class doesn't exist **)
+        if arg[0] in options:
+            inst = arg[0]
+        else:
+            print("** class doesn't exist **")
+        print(inst.id)
+        inst.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
