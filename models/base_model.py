@@ -17,12 +17,13 @@ class BaseModel:
         """
         Initialize instance attributes
         """
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
                     continue
                 elif key == "created_at" or key == "updated_at":
-                    self.__dict__[key] = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    self.__dict__[key] = datetime.strptime(value, time_format)
                 else:
                     self.__dict__[key] = value
         else:
@@ -35,7 +36,8 @@ class BaseModel:
         """
         String representation of class BaseModel instance
         """
-        return ('[{}] ({}) {}'.format(self.__class__.__name__, self.id, self.__dict__))
+        return ('[{}] ({}) {}'.format(self.__class__.__name__,
+                                      self.id, self.__dict__))
 
     def save(self):
         """
@@ -52,7 +54,7 @@ class BaseModel:
         """
         my_dict = {}
         my_dict = self.__dict__.copy()
-        my_dict.update(__class__ = self.__class__.__name__)
+        my_dict.update(__class__=self.__class__.__name__)
         my_dict['created_at'] = my_dict['created_at'].isoformat()
         my_dict['updated_at'] = my_dict['updated_at'].isoformat()
         return my_dict

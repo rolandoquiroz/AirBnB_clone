@@ -6,6 +6,7 @@ file and deserializes JSON file to instances
 from models.base_model import BaseModel
 import json
 
+
 class FileStorage:
     """
     class FileStorage serializes instances to a
@@ -33,7 +34,8 @@ class FileStorage:
         Serializes __objects to JSON objects
         in the JSON file (path: __file_path)
         formatting obj by to_dict method
-          """
+        key <obj class name>.id value <obj>
+        """
         JSON_objects = {}
         for key, value in self.__objects.items():
             JSON_objects[key] = value.to_dict()
@@ -45,14 +47,11 @@ class FileStorage:
         Deserializes the JSON objects in the JSON file
         to __objects (only if the JSON file (__file_path) exists;
         otherwise, do nothing.)
-
         """
         try:
-            with open(self.__file_path, mode="r", encoding = 'utf-8') as FILE:
+            with open(self.__file_path, mode='r', encoding='utf-8') as FILE:
                 JSON_objects = json.load(FILE)
                 for key, value in sorted(JSON_objects.items()):
-                    class_name = value['__class__']
-                    del value['__class__']
-                    self.__objects[key] = eval(class_name)(**value)
+                    self.__objects[key] = eval(value['__class__'])(**value)
         except FileNotFoundError:
             pass
