@@ -4,12 +4,15 @@
 
 import cmd
 import models
+import shlex
 from models.base_model import BaseModel
+
+
+options = {"BaseModel": BaseModel}
 
 
 class HBNBCommand(cmd.Cmd):
     """class HBNB"""
-    prompt = '(hbnb) '
 
     def do_EOF(self, line):
         """End of file"""
@@ -25,16 +28,34 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
-        options = ["BaseModel"]
-        arg = line.split()
+        arg = shlex.split(line)
         if len(arg) == 0:
             print("** class name missing **")
+            return False
         if arg[0] in options:
-            inst = arg[0]
+            inst = options[arg[0]]
         else:
             print("** class doesn't exist **")
+            return False
         print(inst.id)
         inst.save()
 
+    def do_show(self, line):
+        """
+        Prints the string representation of an instance based on the class name and id
+        """
+        arg = shlex.split(line)
+        if len(arg) ==.0:
+            print("** class name missing **")
+            return False
+        if arg[0] in options:
+            if len(arg) < 2:
+                print("** instance id missing **")
+#            else:
+        else:
+            print("** class doesn't exist **")
+
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    prompt = HBNBCommand()
+    prompt.prompt = '(hbnb) '
+    prompt.cmdloop()
