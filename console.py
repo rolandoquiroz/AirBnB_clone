@@ -3,10 +3,8 @@
 
 
 import cmd
-import models
-import shlex
 from models.base_model import BaseModel
-
+import models
 
 options = {"BaseModel": BaseModel}
 
@@ -28,12 +26,12 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
-        arg = shlex.split(line)
+        arg = line.split()
         if len(arg) == 0:
             print("** class name missing **")
             return False
         if arg[0] in options:
-            inst = options[arg[0]]
+            inst = options[arg[0]]()
         else:
             print("** class doesn't exist **")
             return False
@@ -45,15 +43,46 @@ class HBNBCommand(cmd.Cmd):
         Prints the string representation of an instance based on the class name
 and id
         """
-        arg = shlex.split(line)
+        arg = line.split()
         if len(arg) ==.0:
             print("** class name missing **")
             return False
         if arg[0] in options:
             if len(arg) < 2:
                 print("** instance id missing **")
-#            else:
+            else:
+                key = 'arg[0] + '.' + arg[1]'
+                if key in models.storage.all().items():
+                    print(models.storage.all()[key])
+                else:
+                    print("** no instance found **")
         else:
+            print("** class doesn't exist **")
+
+    def do_destroy(self, line):
+        """Deletes an instance based on the class name and id"""
+        arg = line.split()
+        if len(arg) == 0:
+            print("** class name missing **")
+            return False
+        if arg[0] in options:
+            if len(arg) < 2:
+                print("** instance id missing **")
+            else:
+                key = 'arg[0] + '.' + arg[1]'
+                if Key in models.storage.all().items():
+                    del models.storage.all()[key]
+                else:
+                    print("** no instance found **")
+        else:
+            print("** class doesn't exist **")
+
+    def do_all(self, line):
+        """Prints all string representation of all instances based or not on the
+class name
+        """
+        arg = line.split()
+        if len(arg) == 0:
             print("** class doesn't exist **")
 
 if __name__ == '__main__':
