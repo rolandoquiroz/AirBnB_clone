@@ -44,15 +44,15 @@ class HBNBCommand(cmd.Cmd):
 and id
         """
         arg = line.split()
-        if len(arg) ==.0:
+        if len(arg) == 0:
             print("** class name missing **")
             return False
         if arg[0] in options:
             if len(arg) < 2:
                 print("** instance id missing **")
             else:
-                key = 'arg[0] + '.' + arg[1]'
-                if key in models.storage.all().items():
+                key = arg[0] + '.' + arg[1]
+                if key in models.storage.all():
                     print(models.storage.all()[key])
                 else:
                     print("** no instance found **")
@@ -69,8 +69,8 @@ and id
             if len(arg) < 2:
                 print("** instance id missing **")
             else:
-                key = 'arg[0] + '.' + arg[1]'
-                if Key in models.storage.all().items():
+                key = arg[0] + '.' + arg[1]
+                if key in models.storage.all():
                     del models.storage.all()[key]
                 else:
                     print("** no instance found **")
@@ -84,6 +84,7 @@ class name
         arg = line.split()
         if len(arg) == 0:
             print("** class doesn't exist **")
+        else:
 
 if __name__ == '__main__':
     prompt = HBNBCommand()
