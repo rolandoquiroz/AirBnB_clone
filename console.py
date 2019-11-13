@@ -6,7 +6,7 @@ import cmd
 from models.base_model import BaseModel
 from models.user import User
 import models
-
+import shlex
 options = {"BaseModel": BaseModel, "User": User}
 
 
@@ -83,20 +83,20 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances based or not on the
         class name
         """
-        arg = line.split()
-        if (len(arg) == 0 or arg[0] not in options):
-            print("** class doesn't exist **")
-        else:
+        arg = shlex.split(line)
+        if (len(arg) == 0 or arg[0] in options):
             list_ = []
             for key in models.storage.all():
                 list_.append(str(models.storage.all()[key]))
             print(list_)
+        else:
+            print("**.class.doesn't.exist.**")
 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding or
         updating attribute
         """
-        arg = line.split()
+        arg = shlex.split(line)
         if len(arg) == 0:
             print("** class name missing **")
         if arg[0] in options:
