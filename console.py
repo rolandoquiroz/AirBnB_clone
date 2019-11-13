@@ -4,9 +4,10 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 import models
 
-options = {"BaseModel": BaseModel}
+options = {"BaseModel": BaseModel, "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -41,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """
         Prints the string representation of an instance based on the class name
-and id
+        and id
         """
         arg = line.split()
         if len(arg) == 0:
@@ -80,7 +81,7 @@ and id
 
     def do_all(self, line):
         """Prints all string representation of all instances based or not on the
-class name
+        class name
         """
         arg = line.split()
         if (len(arg) == 0 or arg[0] not in options):
@@ -90,6 +91,18 @@ class name
             for key in models.storage.all():
                 list_.append(str(models.storage.all()[key]))
             print(list_)
+
+    def do_update(self, line):
+        """Updates an instance based on the class name and id by adding or
+        updating attribute
+        """
+        arg = line.split()
+        if len(arg) == 0:
+            print("** class name missing **")
+        if arg[0] in options:
+            if len(
+        else:
+            print("** class doesn't exist **")
 
 if __name__ == '__main__':
     prompt = HBNBCommand()
