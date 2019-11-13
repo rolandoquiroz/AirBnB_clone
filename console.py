@@ -72,6 +72,7 @@ and id
                 key = arg[0] + '.' + arg[1]
                 if key in models.storage.all():
                     del models.storage.all()[key]
+                    models.storage.save()
                 else:
                     print("** no instance found **")
         else:
@@ -82,9 +83,13 @@ and id
 class name
         """
         arg = line.split()
-        if len(arg) == 0:
+        if (len(arg) == 0 or arg[0] not in options):
             print("** class doesn't exist **")
         else:
+            list_ = []
+            for key in models.storage.all():
+                list_.append(str(models.storage.all()[key]))
+            print(list_)
 
 if __name__ == '__main__':
     prompt = HBNBCommand()
