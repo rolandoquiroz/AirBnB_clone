@@ -85,10 +85,11 @@ class HBNBCommand(cmd.Cmd):
         """
         arg = shlex.split(line)
         if (len(arg) == 0 or arg[0] in options):
-            list_ = []
-            for key in models.storage.all():
-                list_.append(str(models.storage.all()[key]))
-            print(list_)
+            if models.storage.all():
+                list_ = []
+                for key in models.storage.all():
+                    list_.append(str(models.storage.all()[key]))
+                print(list_)
         else:
             print("**.class.doesn't.exist.**")
 
