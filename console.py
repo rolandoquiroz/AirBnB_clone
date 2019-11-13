@@ -100,7 +100,21 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) == 0:
             print("** class name missing **")
         if arg[0] in options:
-            if len(
+            if len(arg) > 1:
+                key = arg[0] + '.' + arg[1]
+                if key in models.storage.all():
+                    if len(arg) > 2:
+                        if len(arg) > 3:
+                            setattr(models.storage.all()[key], arg[2], arg[3])
+                            models.storage.all()[key].save()
+                        else:
+                            print("** value missing **")
+                    else:
+                        print("** attribute name missing **")
+                else:
+                    print("** no instance found **")
+            else:
+                print("** instance id missing **")
         else:
             print("** class doesn't exist **")
 
