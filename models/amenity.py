@@ -4,6 +4,6 @@
 from models.base_model import BaseModel
 
 
-def Amenity(BaseModel):
+class Amenity(BaseModel):
     """Class Amenity"""
     name = ""
