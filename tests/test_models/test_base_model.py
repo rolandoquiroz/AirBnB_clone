@@ -28,6 +28,7 @@ class TestBaseModelCodeFormat(unittest.TestCase):
         """
         Test Basemodel documentation
         """
+
         self.assertIsNotNone(BaseModel.__doc__)
         self.assertIsNotNone(BaseModel.__init__.__doc__)
         self.assertIsNotNone(BaseModel.__str__.__doc__)
@@ -60,9 +61,7 @@ class testBaseModel(unittest.TestCase):
         """
         test id
         """
-        obj2 = BaseModel()
         self.assertEqual(str, type(self.obj1.id))
-        del obj2
 
     def test_BaseModel_created_at(self):
         """
@@ -76,18 +75,19 @@ class testBaseModel(unittest.TestCase):
         """
         self.assertEqual(datetime, type(self.obj1.updated_at))
 
-    def test_BaseModel_methods(self):
+    def test_BaseModel_attributes(self):
         """
         test BaseModel methods
         """
-        self.assertTrue(hasattr(BaseModel, "__init__"))
-        self.assertTrue(hasattr(BaseModel, "save"))
-        self.assertTrue(hasattr(BaseModel, "to_dict"))
+        self.assertTrue(hasattr(self.obj1, "__init__"))
+        self.assertTrue(hasattr(self.obj1, "created_at"))
+        self.assertTrue(hasattr(self.obj1, "updated_at"))
+        self.assertTrue(hasattr(self.obj1, "id"))
 
     def test_BaseModel_init(self):
         """
         test_BaseModel_attr
-        """
+xo        """
         self.assertTrue(isinstance(self.obj1, BaseModel))
 
     def test_BaseModel_unique_ids(self):
