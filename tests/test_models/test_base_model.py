@@ -110,6 +110,7 @@ class testBaseModel(unittest.TestCase):
         """
         obj1_dict = self.obj1.to_dict()
         self.assertIsInstance(obj1_dict, dict)
+        self.assertIsInstance(obj1_dict['id'], str)
         self.assertIsInstance(obj1_dict['updated_at'], str)
         self.assertIsInstance(obj1_dict['created_at'], str)
         self.assertEqual(obj1_dict['__class__'], self.obj1.__class__.__name__)
