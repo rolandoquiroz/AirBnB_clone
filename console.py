@@ -3,10 +3,18 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.review import Review
+from models.amenity import Amenity
+from models.state import State
+from models.place import Place
+from models.city import City
 import models
 import shlex
 
-options = {"BaseModel": BaseModel, "User": User}
+options = {
+            "BaseModel": BaseModel, "User": User, "Review": Review, "Amenity":
+            Amenity, "State": State, "Place": Place, "City": City
+        }
 
 
 class HBNBCommand(cmd.Cmd):
