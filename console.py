@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 """console contains the entry point of the command interpreter"""
-
-
 import cmd
 from models.base_model import BaseModel
 from models.user import User
 import models
 import shlex
+
 options = {"BaseModel": BaseModel, "User": User}
 
 
@@ -27,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
-        arg = line.split()
+        arg = shlex.split(line)
         if len(arg) == 0:
             print("** class name missing **")
             return False
@@ -44,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
         Prints the string representation of an instance based on the class name
         and id
         """
-        arg = line.split()
+        arg = shlex.split(line)
         if len(arg) == 0:
             print("** class name missing **")
             return False
@@ -62,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
-        arg = line.split()
+        arg = shlex.split(line)
         if len(arg) == 0:
             print("** class name missing **")
             return False
@@ -90,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
                 list_.append(str(models.storage.all()[key]))
             print(list_)
         else:
-            print("**.class.doesn't.exist.**")
+            print("** class doesn't exist **")
 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding or
@@ -99,6 +98,7 @@ class HBNBCommand(cmd.Cmd):
         arg = shlex.split(line)
         if len(arg) == 0:
             print("** class name missing **")
+            return False
         if arg[0] in options:
             if len(arg) > 1:
                 key = arg[0] + '.' + arg[1]
