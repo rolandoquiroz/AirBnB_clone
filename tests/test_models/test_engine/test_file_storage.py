@@ -1,43 +1,26 @@
 #!/usr/bin/python3
 """
-Unit test for BaseModel
+FileStorage Unit test
 """
+import models
 import unittest
 import pep8
-from models.base_model import BaseModel
-from datetime import datetime
-from uuid import uuid4
+import os
+import sys
 import json
+from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models import storage
 
-
-class TestBaseModelCodeFormat(unittest.TestCase):
+class Test_FileStorage(unittest.TestCase):
     """
-    Test that checks style and documentation for BaseModel
-    """
-
-    def test_pep8_conformance_BaseModel(self):
-        """
-        Test that we conform to PEP8.
-        """
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/base_model.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_BaseModel_docs(self):
-        """
-        Test Basemodel documentation
-        """
-        self.assertIsNotNone(BaseModel.__doc__)
-        self.assertIsNotNone(BaseModel.__init__.__doc__)
-        self.assertIsNotNone(BaseModel.__str__.__doc__)
-        self.assertIsNotNone(BaseModel.save.__doc__)
-        self.assertIsNotNone(BaseModel.to_dict.__doc__)
-
-
-class testBaseModel(unittest.TestCase):
-    """
-    class BaseModel tests
+    class FileStorage tests
     """
 
     @classmethod
@@ -45,75 +28,86 @@ class testBaseModel(unittest.TestCase):
         """
         SetUp
         """
-        cls.obj1 = BaseModel()
-        cls.obj1.name = "McLovin"
-        cls.obj1.my_num = 666
+        cls.usr1 = User()
+        cls.usr1.first_name = "John"
+        cls.usr1.last_name = "Doe"
+        cls.usr1.email = "johndoe@gmail.com"
+        cls.storage = FileStorage()
+        fs = FileStorage()
 
     @classmethod
     def tearDownClass(cls):
         """
         tearDown
         """
-        del cls.obj1
+        pass
 
-    def test_BaseModel_id(self):
+    def test_pep8_conformance_FileStorage(self):
         """
-        test id
+        Test that we conform to PEP8.
         """
-        obj2 = BaseModel()
-        self.assertEqual(str, type(self.obj1.id))
-        del obj2
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def test_BaseModel_created_at(self):
+    def test_FileStorage_docs(self):
         """
-        test BaseModel created_at
+        Test FileStorage documentation
         """
-        self.assertEqual(datetime, type(self.obj1.created_at))
+        self.assertIsNotNone(FileStorage.all.__doc__)
+        self.assertIsNotNone(FileStorage.new.__doc__)
+        self.assertIsNotNone(FileStorage.save.__doc__)
+        self.assertIsNotNone(FileStorage.reload.__doc__)
 
-    def test_BaseModel_updated_at(self):
-        """
-        test BaseModel updated_at
-        """
-        self.assertEqual(datetime, type(self.obj1.updated_at))
+    def test_FileStorage_instantiation(self):
+        """Tests instantiation"""
+        temp_storage = FileStorage()
+        self.assertIsInstance(temp_storage, FileStorage)
 
-    def test_BaseModel_methods(self):
-        """
-        test BaseModel methods
-        """
-        self.assertTrue(hasattr(BaseModel, "__init__"))
-        self.assertTrue(hasattr(BaseModel, "save"))
-        self.assertTrue(hasattr(BaseModel, "to_dict"))
+    def test_FileStorage_saves_new_instance(self):
+        """Tests if JSON file was created"""
+        def touch(file_path):
+            with open(file_path, 'a'):
+                os.utime(file_path, None)
 
-    def test_BaseModel_init(self):
-        """
-        test_BaseModel_attr
-xo        """
-        self.assertTrue(isinstance(self.obj1, BaseModel))
+        obj = BaseModel()
+        models.storage.new(obj)
+        models.storage.save()
+        touch(file_path="file.json")
+        file_exist = os.path.exists(self.file_path)
+        self.assertTrue(file_exist)
 
-    def test_BaseModel_unique_ids(self):
-        """
-        test_BaseModel_unique_ids
-        """
-        obj2 = BaseModel()
-        self.assertNotEqual(self.obj1.id, obj2.id)
+    def test_Filestorage_all(self):
+        """Tests all method"""
+        tmpstor = FileStorage()
+        tmpdic = tmpstor.all()
+        self.assertIsNotNone(tmpdic)
+        self.assertEqual(type(tmpdic), dict)
 
-    def test_BaseModel_save(self):
-        """
-        test_BaseModel_save
-        """
-        self.obj1.save()
-        self.assertNotEqual(self.obj1.created_at, self.obj1.updated_at)
+    def test_Filestorage_new(self):
+        """Tests new method"""
+        tmpstor = FileStorage()
+        tmpdic = tmpstor.all()
+        Bob = User()
+        Bob.id = 1996
+        Bob.name = "Robert"
+        tmpstor.new(Bob)
+        k = "{}.{}".format(Bob.__class__.__name__, str(Bob.id))
+        self.assertIsNotNone(tmpdic[k])
 
-    def test_BaseModel_to_dict(self):
-        """
-        test_BaseModel_to_dict
-        """
-        obj1_dict = self.obj1.to_dict()
-        self.assertIsInstance(obj1_dict, dict)
-        self.assertIsInstance(obj1_dict['id'], str)
-        self.assertIsInstance(obj1_dict['updated_at'], str)
-        self.assertIsInstance(obj1_dict['created_at'], str)
-        self.assertEqual(obj1_dict['__class__'], self.obj1.__class__.__name__)
+    def test_FileStorage_attributes(self):
+        """Test FileStorage class attributes"""
+        self.assertTrue(isinstance(storage._FileStorage__objects, dict))
+        self.assertTrue(isinstance(storage._FileStorage__file_path, dict))
+
+    def test_Filestorage_reload(self):
+        """Tests reaload method """
+        Bob = FileStorage()
+        sizeofobj = len(Bob._FileStorage__objects)
+        self.assertGreater(sizeofobj, 0)
+
+
 
 
 if __name__ == "__main__":
