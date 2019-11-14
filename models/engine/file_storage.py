@@ -50,7 +50,6 @@ class FileStorage:
         with open(self.__file_path, mode='w', encoding='utf-8') as FILE:
             json.dump(JSON_objects, FILE)
 
-
     def reload(self):
         """
         Deserializes the JSON objects in the JSON file
