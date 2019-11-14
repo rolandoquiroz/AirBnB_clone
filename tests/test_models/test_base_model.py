@@ -9,6 +9,7 @@ from datetime import datetime
 from uuid import uuid4
 import json
 
+
 class testBaseModel(unittest.TestCase):
     """
     class BaseModel tests
@@ -30,7 +31,6 @@ class testBaseModel(unittest.TestCase):
         """
         del cls.obj1
 
-
     def test_pep8_conformance_BaseModel(self):
         """
         Test that we conform to PEP8.
@@ -50,7 +50,6 @@ class testBaseModel(unittest.TestCase):
         self.assertIsNotNone(BaseModel.__str__.__doc__)
         self.assertIsNotNone(BaseModel.save.__doc__)
         self.assertIsNotNone(BaseModel.to_dict.__doc__)
-
 
     def test_BaseModel_id(self):
         """
@@ -82,7 +81,7 @@ class testBaseModel(unittest.TestCase):
     def test_BaseModel_init(self):
         """
         test_BaseModel_attr
-xo        """
+        """
         self.assertTrue(isinstance(self.obj1, BaseModel))
 
     def test_BaseModel_unique_ids(self):
@@ -112,4 +111,4 @@ xo        """
 
 
 if __name__ == "__main__":
-    unittest.main()        )
+    unittest.main()
