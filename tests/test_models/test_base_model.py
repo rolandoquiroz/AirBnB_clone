@@ -9,11 +9,27 @@ from datetime import datetime
 from uuid import uuid4
 import json
 
+class testBaseModel(unittest.TestCase):
+    """
+    class BaseModel tests
+    """
 
-class TestBaseModelCodeFormat(unittest.TestCase):
-    """
-    Test that checks style and documentation for BaseModel
-    """
+    @classmethod
+    def setUpClass(cls):
+        """
+        SetUp
+        """
+        cls.obj1 = BaseModel()
+        cls.obj1.name = "McLovin"
+        cls.obj1.my_num = 666
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        tearDown
+        """
+        del cls.obj1
+
 
     def test_pep8_conformance_BaseModel(self):
         """
@@ -35,27 +51,6 @@ class TestBaseModelCodeFormat(unittest.TestCase):
         self.assertIsNotNone(BaseModel.save.__doc__)
         self.assertIsNotNone(BaseModel.to_dict.__doc__)
 
-
-class testBaseModel(unittest.TestCase):
-    """
-    class BaseModel tests
-    """
-
-    @classmethod
-    def setUpClass(cls):
-        """
-        SetUp
-        """
-        cls.obj1 = BaseModel()
-        cls.obj1.name = "McLovin"
-        cls.obj1.my_num = 666
-
-    @classmethod
-    def tearDownClass(cls):
-        """
-        tearDown
-        """
-        del cls.obj1
 
     def test_BaseModel_id(self):
         """
@@ -117,4 +112,4 @@ xo        """
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()        )
