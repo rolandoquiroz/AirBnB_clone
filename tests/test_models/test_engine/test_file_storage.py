@@ -18,6 +18,7 @@ from models.place import Place
 from models.review import Review
 from models import storage
 
+
 class Test_FileStorage(unittest.TestCase):
     """
     class FileStorage tests
@@ -106,9 +107,6 @@ class Test_FileStorage(unittest.TestCase):
         Bob = FileStorage()
         sizeofobj = len(Bob._FileStorage__objects)
         self.assertGreater(sizeofobj, 0)
-
-
-
 
 if __name__ == "__main__":
     unittest.main()
