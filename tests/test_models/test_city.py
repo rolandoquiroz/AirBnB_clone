@@ -5,7 +5,7 @@ City test for User
 import unittest
 import pep8
 from models.base_model import BaseModel
-from models.city import city
+from models.city import City
 from datetime import datetime
 from uuid import uuid4
 import json
