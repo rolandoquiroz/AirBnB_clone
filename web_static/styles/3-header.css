@@ -1,13 +1,14 @@
 header {
-      background-color: #white;
-      height: 70px;
-      width: 100%;
-      border-bottom: 1px solid #CCCCCC;
+    background-color: white;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
 }
 
-#logo {
-    background: url(/images/logo.png);
-    float: left;
+header .logo {
+    background: url("../images/logo.png");
+    background-position: left;
+    background-repeat: no-repeat;
     margin-left: 20px;
-    vertical-align: middle;
+    height: 100%;
 }
