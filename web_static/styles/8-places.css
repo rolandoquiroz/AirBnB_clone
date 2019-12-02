@@ -19,7 +19,7 @@
     flex-flow: row wrap;
     margin-bottom: 8%;
     justify-content: center;
-
+    
 }
 .places article {
     width: 390px;
@@ -30,10 +30,10 @@
 }
 
 
-.places.list_it {
+.places .list_it {
     display: flex;
     justify-content: space-between;
-    flex-direction: row;
+    flex-direction: row;  
     margin-top: 0px;
     margin-bottom: 10px;
 }
